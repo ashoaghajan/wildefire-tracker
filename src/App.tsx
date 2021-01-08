@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Map from './components/Map';
+import spinner from './assets/spinner.gif';
+import Header from './components/Header';
+import { mapProps } from './global/globalVariables';
+import { useApp } from './hooks/useApp';
 
 function App() {
+
+  const { loading, eventData } = useApp();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      {!loading ? 
+        <Map center={mapProps.center} zoom={mapProps.zoom} eventData={eventData}/> : 
+        <div className='loader'>
+          <img src={spinner} alt='spinner'></img>
+          <h1>Fetching Data</h1>
+        </div>
+      }
     </div>
   );
 }
